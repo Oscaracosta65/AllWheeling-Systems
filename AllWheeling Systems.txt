@@ -1,0 +1,1129 @@
+{source}
+<!-- BEGIN: Lottery Wheeling Systems Module -->
+[[div class="lotto-systems-module"]]
+
+[[style]]
+/* --- LottoExpert Wheeling Catalog (SKAI brand, premium, mobile-first, WCAG AA) --- */
+
+/* Brand Tokens (scoped) */
+.le-wheel-wrap{
+  --skai-blue:#1C66FF;
+  --deep-navy:#0A1A33;
+  --sky-gray:#EFEFF5;
+  --soft-slate:#7F8DAA;
+  --success:#20C997;
+  --amber:#F5A623;
+
+  --text:#0A1A33;
+  --text-muted:#5B6B86;
+  --border:rgba(10,26,51,.12);
+  --border-strong:rgba(10,26,51,.18);
+
+  --card:#FFFFFF;
+  --surface:#FFFFFF;
+  --surface-2:rgba(239,239,245,.55);
+
+  --shadow-sm: 0 1px 2px rgba(10,26,51,.06);
+  --shadow-md: 0 10px 30px rgba(10,26,51,.10);
+  --shadow-lg: 0 18px 45px rgba(10,26,51,.14);
+
+  --r12:12px;
+  --r16:16px;
+  --r20:20px;
+
+  --s8:8px;
+  --s12:12px;
+  --s16:16px;
+  --s24:24px;
+  --s32:32px;
+  --s20:20px;
+
+  max-width:1100px;
+  margin:0 auto;
+  padding:var(--s24);
+  background: linear-gradient(180deg, var(--sky-gray) 0%, #FFFFFF 100%);
+  border-radius: var(--r20);
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Subtle reset inside module only (prevents Helix bleed) */
+.le-wheel-wrap *{ box-sizing:border-box; }
+.le-wheel-wrap a{ color:var(--skai-blue); text-decoration:none; }
+.le-wheel-wrap a:hover{ text-decoration:underline; }
+
+/* A11Y: Never remove focus globally. Provide consistent focus-visible styling. */
+.le-wheel-wrap :focus{ outline:none; }
+.le-wheel-wrap :focus-visible{
+  outline: 3px solid rgba(28,102,255,.35);
+  outline-offset: 3px;
+}
+
+/* Hero */
+.le-wheel-hero{
+  border-radius: var(--r20);
+  padding: var(--s24);
+  background: linear-gradient(135deg, var(--deep-navy) 0%, var(--skai-blue) 100%);
+  color:#FFFFFF;
+  box-shadow: var(--shadow-lg);
+  position:relative;
+  overflow:hidden;
+}
+.le-wheel-hero:after{
+  content:"";
+  position:absolute;
+  right:-120px;
+  top:-120px;
+  width:260px;
+  height:260px;
+  border-radius:999px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 60%);
+  pointer-events:none;
+}
+.le-wheel-hero h1{
+  margin:0 0 6px;
+  font-size:24px;
+  letter-spacing:-0.2px;
+  line-height:1.2;
+  color:#FFFFFF !important;
+  text-shadow: 0 1px 1px rgba(10,26,51,.25);
+}
+.le-wheel-hero p{
+  margin:0;
+  color:rgba(255,255,255,.90) !important;
+  line-height:1.45;
+  max-width:70ch;
+}
+
+/* Layout grid */
+.le-wheel-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap: var(--s16);
+  margin-top: var(--s16);
+}
+@media (min-width: 980px){
+  .le-wheel-grid{ grid-template-columns: 420px 1fr; align-items:start; }
+}
+
+/* Cards */
+.le-card{
+  border:1px solid var(--border);
+  border-radius: var(--r20);
+  background: var(--card);
+  padding: var(--s20);
+  box-shadow: var(--shadow-md);
+  min-width:0;
+}
+.le-card .le-label{ margin-bottom:6px; }
+
+/* Mobile overflow fixes */
+.le-wheel-grid > .le-card{ min-width:0; }
+.le-card{ min-width:0; }
+.le-results{
+  max-width:100%;
+  overflow-x:auto !important;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+@media (max-width: 720px){
+  .le-table{ min-width:640px; }
+}
+@media (max-width: 520px){
+  .le-table th,
+  .le-table td{
+    padding:10px 10px;
+    font-size:13px;
+  }
+  .le-table a.le-btn{
+    padding:10px 12px;
+    min-height:40px;
+  }
+}
+
+/* Helpers / copy */
+.le-help{
+  font-size:13px;
+  color:var(--text-muted);
+  line-height:1.55;
+}
+.le-help ol{ margin:8px 0 0; padding-left:18px; }
+.le-help li{ margin:6px 0; }
+.le-muted{
+  color:var(--text-muted);
+  font-size:12px;
+  line-height:1.35;
+}
+.le-scrollhint{
+  display:none;
+  margin-top:6px;
+  font-weight:800;
+  color: rgba(10,26,51,.72);
+}
+@media (max-width: 720px){
+  .le-scrollhint{ display:block; }
+}
+.le-danger{ color:#B42318; font-weight:800; }
+
+.le-kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 8px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background: rgba(239,239,245,.9);
+  color: var(--deep-navy);
+}
+
+/* Form layout */
+.le-row{
+  display:flex;
+  gap: var(--s12);
+  flex-wrap:wrap;
+  align-items:flex-end;
+}
+.le-row > *{
+  flex:0 0 auto;
+  min-width:0;
+}
+
+.le-label{
+  font-size:12px;
+  color: rgba(10,26,51,.72);
+  font-weight:700;
+  letter-spacing:.2px;
+}
+
+/* Inputs */
+.le-input,
+.le-select{
+  border:1px solid var(--border-strong);
+  border-radius: var(--r12);
+  padding:10px 12px;
+  font-size:14px;
+  background:#FFFFFF;
+  color: var(--text);
+  min-height:42px;
+  transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease;
+}
+.le-input:hover,
+.le-select:hover{
+  border-color: rgba(28,102,255,.45);
+}
+.le-input:focus,
+.le-select:focus{
+  border-color: var(--skai-blue);
+  box-shadow: 0 0 0 4px rgba(28,102,255,.18);
+}
+
+/* Buttons */
+.le-btn{
+  appearance:none;
+  border:0;
+  border-radius:14px;
+  padding:10px 16px;
+  font-weight:800;
+  cursor:pointer;
+  background: var(--skai-blue);
+  color:#FFFFFF;
+  min-height:42px;
+  box-shadow: 0 10px 22px rgba(28,102,255,.24);
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+.le-btn:hover{
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+}
+.le-btn:active{
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(28,102,255,.20);
+}
+
+.le-btn.secondary{
+  background: var(--deep-navy);
+  box-shadow: 0 10px 22px rgba(10,26,51,.18);
+}
+.le-btn.ghost{
+  background:#FFFFFF;
+  border:1px solid rgba(28,102,255,.55);
+  color: var(--skai-blue);
+  box-shadow:none;
+}
+.le-btn.ghost:hover{
+  background: rgba(28,102,255,.06);
+}
+.le-btn:focus{
+  outline:4px solid rgba(28,102,255,.20);
+  outline-offset:2px;
+}
+
+/* Status */
+.le-status{
+  display:flex;
+  gap: var(--s12);
+  align-items:center;
+  margin-top: var(--s12);
+  padding:12px 14px;
+  border-radius: var(--r16);
+  border:1px solid var(--border);
+  background: rgba(239,239,245,.6);
+  color: var(--deep-navy);
+  font-size:13px;
+}
+.le-dot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background: rgba(127,141,170,.9);
+  box-shadow: 0 0 0 4px rgba(127,141,170,.14);
+}
+.le-dot.ok{
+  background: var(--success);
+  box-shadow: 0 0 0 4px rgba(32,201,151,.16);
+}
+.le-dot.warn{
+  background: var(--amber);
+  box-shadow: 0 0 0 4px rgba(245,166,35,.18);
+}
+.le-dot.err{
+  background:#EF4444;
+  box-shadow: 0 0 0 4px rgba(239,68,68,.18);
+}
+
+/* Results container */
+.le-results{
+  max-height:560px;
+  max-width:100%;
+  overflow-y:auto;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  border:1px solid var(--border);
+  border-radius: var(--r16);
+  background:#FFFFFF;
+  mask-image: linear-gradient(to bottom, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 92%, transparent 100%);
+}
+
+/* Table */
+.le-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:14px;
+  table-layout:fixed;
+}
+@media (max-width: 720px){
+  .le-table{
+    min-width:640px;
+    table-layout:auto;
+  }
+}
+.le-table th,
+.le-table td{
+  padding:12px 12px;
+  border-bottom:1px solid rgba(10,26,51,.08);
+  vertical-align:middle;
+}
+.le-table th{
+  position:sticky;
+  top:0;
+  background:#FFFFFF;
+  z-index:1;
+  text-align:left;
+  font-weight:800;
+  color: var(--deep-navy);
+}
+.le-table tbody tr:hover td{
+  background: rgba(28,102,255,.035);
+}
+.le-table td:last-child{ text-align:right; }
+
+@media (min-width: 721px){
+  .le-table th:nth-child(1), .le-table td:nth-child(1){ width:70px; }
+  .le-table th:nth-child(2), .le-table td:nth-child(2){ width:90px; }
+  .le-table th:nth-child(3), .le-table td:nth-child(3){ width:120px; }
+  .le-table th:nth-child(4), .le-table td:nth-child(4){ width:110px; }
+  .le-table th:nth-child(5), .le-table td:nth-child(5){ width:170px; }
+
+  .le-table th,
+  .le-table td{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .le-table a.le-btn{
+    max-width:100%;
+    padding:8px 12px;
+    min-height:38px;
+  }
+}
+
+/* Table CTA */
+.le-table a.le-btn{
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#1C66FF;
+  color:#FFFFFF !important;
+  border:1px solid rgba(255,255,255,0);
+  border-radius:999px;
+  padding:10px 16px;
+  min-height:42px;
+  box-shadow: 0 10px 22px rgba(28,102,255,.22);
+}
+.le-table a.le-btn:hover{
+  text-decoration:none;
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+}
+.le-table a.le-btn:active{
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(28,102,255,.18);
+}
+.le-table a.le-btn:focus{
+  outline:4px solid rgba(28,102,255,.20);
+  outline-offset:2px;
+}
+.le-table a.le-btn.secondary{
+  background: linear-gradient(135deg, #0A1A33 0%, #1C66FF 100%);
+  color:#FFFFFF !important;
+  box-shadow: 0 12px 26px rgba(10,26,51,.18);
+}
+
+/* Number grid / pills */
+.le-number-grid{
+  display:grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: var(--s8);
+}
+@media (max-width: 520px){
+  .le-number-grid{ grid-template-columns: repeat(6, 1fr); }
+}
+.le-num{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--border-strong);
+  border-radius: var(--r12);
+  padding:10px 0;
+  background:#FFFFFF;
+  cursor:pointer;
+  user-select:none;
+  font-weight:800;
+  color: var(--deep-navy);
+}
+.le-num[aria-pressed="true"]{
+  background: rgba(245,166,35,.10);
+  border-color: rgba(245,166,35,.65);
+  box-shadow: 0 0 0 4px rgba(245,166,35,.14);
+}
+.le-num:focus{
+  box-shadow: 0 0 0 4px rgba(28,102,255,.18);
+}
+
+/* Pills */
+.le-pillbox{
+  display:flex;
+  flex-wrap:wrap;
+  gap: var(--s8);
+  margin-top: var(--s12);
+}
+.le-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--border);
+  background: rgba(239,239,245,.7);
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:800;
+  color: var(--deep-navy);
+}
+.le-pill button{
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  font-weight:900;
+  color: rgba(10,26,51,.65);
+}
+.le-pill button:hover{ color: rgba(10,26,51,.95); }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .le-btn,
+  .le-input,
+  .le-select{
+    transition:none !important;
+  }
+  *{
+    scroll-behavior:auto !important;
+  }
+}
+[[/style]]
+
+[[div class="le-wheel-wrap"]]
+
+  [[div class="le-wheel-hero"]]
+    [[h1]]Wheeling Systems Library[[/h1]]
+    [[p]]
+      A curated reference of lottery wheeling systems available on LottoExpert.net.
+      This library helps you understand how different systems structure number coverage
+      before you generate combinations.
+    [[/p]]
+  [[/div]]
+
+  [[div class="le-wheel-grid"]]
+
+    [[div class="le-card"]]
+
+      [[div class="le-help"]]
+
+        [[div class="le-label"]]What this page is for[[/div]]
+        <p>
+          This page is a <strong>system selection and comparison tool</strong>.
+          It does not generate numbers, predictions, or results.
+          Instead, it helps you choose <em>how</em> combinations will be constructed
+          once you decide which numbers to play.
+        </p>
+
+        [[div class="le-label" style="margin-top:14px"]]What a wheeling system does[[/div]]
+        <p>
+          A wheeling system is a predefined combination template.
+          Given a pool of numbers, the system determines how those numbers
+          are grouped into lines so coverage is distributed across combinations
+          in a structured way.
+        </p>
+
+        <p>
+          Different systems trade off simplicity, total lines, and coverage depth.
+          This library lets you compare those structures before committing to one.
+        </p>
+
+        [[div class="le-label" style="margin-top:14px"]]How this fits into LottoExpert[[/div]]
+        <p>
+          On LottoExpert.net, wheeling systems are part of a broader toolkit.
+          You select a system here, then open it in the Wheel Builder to
+          generate combinations using your own selected numbers.
+        </p>
+
+        <p class="le-muted">
+          SKAI-powered analysis tools help interpret patterns and distributions elsewhere
+          on the platform. Wheeling systems themselves are neutral structures and do not
+          predict outcomes.
+        </p>
+
+        [[div class="le-label" style="margin-top:16px"]]How to use this library[[/div]]
+        [[ol]]
+          [[li]]
+            Filter systems by <strong>Pick Size</strong>, <strong>Numbers to Play</strong>,
+            and <strong>Assurance</strong> to narrow the list.
+          [[/li]]
+          [[li]]
+            Compare how many combinations each system produces.
+          [[/li]]
+          [[li]]
+            Open a system to move into the Wheel Builder and generate combinations.
+          [[/li]]
+        [[/ol]]
+
+        <p class="le-muted">
+          Important: Wheeling systems describe structure and coverage.
+          They do not increase odds or guarantee results.
+        </p>
+
+      [[/div]]
+
+      [[div class="le-status"]]
+        [[span class="le-dot" aria-hidden="true"]][[/span]]
+        [[div id="leCatalogStatus" role="status" aria-live="polite"]]
+          Loading wheeling systems…
+        [[/div]]
+      [[/div]]
+
+      [[div id="filter-container" class="le-row" aria-label="Wheel catalog filters"]]
+        [[div]]
+          [[div class="le-label"]][[label for="pickSize"]]Pick Size[[/label]][[/div]]
+          [[select id="pickSize" class="le-select"]][[/select]]
+        [[/div]]
+
+        [[div]]
+          [[div class="le-label"]][[label for="numberRange"]]Numbers to Play[[/label]][[/div]]
+          [[select id="numberRange" class="le-select"]][[/select]]
+        [[/div]]
+
+        [[div]]
+          [[div class="le-label"]][[label for="assurance"]]Assurance[[/label]][[/div]]
+          [[select id="assurance" class="le-select"]][[/select]]
+        [[/div]]
+
+        [[div]]
+          [[div class="le-label"]]&nbsp;[[/div]]
+          [[button id="clearFilters" class="le-btn ghost" type="button"]]
+            Clear Filters
+          [[/button]]
+        [[/div]]
+      [[/div]]
+
+    [[/div]]
+
+    [[div class="le-card"]]
+      [[div class="le-label"]]Available wheeling systems[[/div]]
+      [[div class="le-muted"]]
+        Sort by Pick, Numbers, Assurance, or total Games to compare system structures.
+        <span class="le-scrollhint" aria-hidden="true">
+          Mobile tip: rotate to landscape for a wider view. You can also swipe left/right to see all columns. Scroll up/down for more systems.
+        </span>
+      [[/div]]
+
+      [[div class="le-results" role="region" aria-label="Wheel catalog results"]]
+        [[table id="resultsTable" class="le-table"]]
+          [[thead]]
+            [[tr]]
+              [[th class="sortable" data-type="pickSize"]]Pick[[/th]]
+              [[th class="sortable" data-type="numberRange"]]Numbers[[/th]]
+              [[th class="sortable" data-type="assuranceSort"]]Guarantee Basis[[/th]]
+              [[th class="sortable" data-type="games"]]Games[[/th]]
+              [[th]]Open[[/th]]
+            [[/tr]]
+          [[/thead]]
+          [[tbody]][[/tbody]]
+        [[/table]]
+      [[/div]]
+    [[/div]]
+
+  [[/div]]
+
+[[/div]]
+
+[[script]]
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // Same JSON source currently used in production.
+  var INDEX_URL = '/media/lottoexpert/wheels/wheels-index.json?v=' + Date.now();
+
+  // Current production builder route.
+  var ENGINE_BASE = '/wheel-builder1';
+
+  // Future SEO detail route.
+  // Leave disabled until the detail pages are deployed.
+  var DETAIL_BASE = '/wheeling-system';
+  var USE_DETAIL_PAGE = false;
+
+  var data = [];
+  var filteredData = [];
+
+  var pickSizeSelector = document.getElementById('pickSize');
+  var numberRangeSelector = document.getElementById('numberRange');
+  var assuranceSelector = document.getElementById('assurance');
+  var resultsTable = document.getElementById('resultsTable');
+  var tableBody = resultsTable.getElementsByTagName('tbody')[0];
+  var statusBox = document.getElementById('leCatalogStatus');
+
+  function escapeHtml(value) {
+    var div = document.createElement('div');
+    div.textContent = value == null ? '' : String(value);
+    return div.innerHTML;
+  }
+
+  function safeInt(value) {
+    var parsed = parseInt(value, 10);
+    return isNaN(parsed) ? 0 : parsed;
+  }
+
+  function buildActionUrl(item) {
+    if (USE_DETAIL_PAGE === true) {
+      return DETAIL_BASE + '/' + encodeURIComponent(item.system_id);
+    }
+
+    return ENGINE_BASE + '?system_id=' + encodeURIComponent(item.system_id);
+  }
+
+  function populateDropdown(selector, optionsArray, forcedValue) {
+    var force = (forcedValue != null) ? String(forcedValue) : 'All';
+    var exists = { 'All': true };
+    var i;
+    var option;
+    var value;
+
+    selector.innerHTML = '<option value="All">All</option>';
+
+    optionsArray = optionsArray || [];
+
+    for (i = 0; i < optionsArray.length; i++) {
+      value = String(optionsArray[i]).trim();
+
+      if (!value) {
+        continue;
+      }
+
+      exists[value] = true;
+
+      option = document.createElement('option');
+      option.value = value;
+      option.textContent = value;
+      selector.appendChild(option);
+    }
+
+    selector.value = exists[force] ? force : 'All';
+  }
+
+  function refreshSelectUI(selectEl) {
+    try {
+      var parent;
+      var nice;
+      var evt;
+
+      if (!selectEl) {
+        return;
+      }
+
+      parent = selectEl.parentNode;
+
+      if (parent) {
+        nice = parent.querySelector('.nice-select');
+        if (nice && nice.parentNode) {
+          nice.parentNode.removeChild(nice);
+        }
+      }
+
+      evt = document.createEvent('HTMLEvents');
+      evt.initEvent('change', true, false);
+      selectEl.dispatchEvent(evt);
+    } catch (e) {
+      // Silent by design for production stability.
+    }
+  }
+
+  function populateAllNumberRanges() {
+    var map = {};
+    var uniqueRanges = [];
+    var i;
+    var key;
+
+    for (i = 0; i < data.length; i++) {
+      map[data[i].numberRange] = true;
+    }
+
+    for (key in map) {
+      if (Object.prototype.hasOwnProperty.call(map, key)) {
+        uniqueRanges.push(safeInt(key));
+      }
+    }
+
+    uniqueRanges = uniqueRanges.filter(function(n) {
+      return n > 0;
+    }).sort(function(a, b) {
+      return a - b;
+    });
+
+    populateDropdown(numberRangeSelector, uniqueRanges, 'All');
+  }
+
+  function populateAllAssurances() {
+    var map = {};
+    var uniqueAssurances = [];
+    var i;
+    var key;
+    var assuranceValue;
+
+    for (i = 0; i < data.length; i++) {
+      assuranceValue = String(data[i].assurance || '').trim();
+      if (assuranceValue) {
+        map[assuranceValue] = true;
+      }
+    }
+
+    for (key in map) {
+      if (Object.prototype.hasOwnProperty.call(map, key)) {
+        uniqueAssurances.push(key);
+      }
+    }
+
+    uniqueAssurances.sort();
+
+    populateDropdown(assuranceSelector, uniqueAssurances, 'All');
+  }
+
+  function displayData(rows) {
+    var i;
+    var item;
+    var row;
+    var aCell;
+    var linkCell;
+    var link;
+
+    tableBody.innerHTML = '';
+
+    for (i = 0; i < rows.length; i++) {
+      item = rows[i];
+      row = tableBody.insertRow();
+
+      row.insertCell(0).textContent = item.pickSize;
+      row.insertCell(1).textContent = item.numberRange;
+
+      aCell = row.insertCell(2);
+      aCell.textContent = item.assurancePlain || item.assurance || '';
+      if (item.assuranceTitle) {
+        aCell.title = item.assuranceTitle;
+      }
+
+      row.insertCell(3).textContent = item.games;
+
+      linkCell = row.insertCell(4);
+      link = document.createElement('a');
+      link.href = buildActionUrl(item);
+      link.textContent = (USE_DETAIL_PAGE === true) ? 'View Details' : 'View System';
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.className = 'le-btn secondary';
+      linkCell.appendChild(link);
+    }
+
+    if (!rows.length) {
+      row = tableBody.insertRow();
+      linkCell = row.insertCell(0);
+      linkCell.colSpan = 5;
+      linkCell.textContent = 'No systems found for these filters.';
+    }
+  }
+
+  function updateNumberRangeDropdown() {
+    var psVal = String(pickSizeSelector.value || 'All');
+    var psNum = (psVal === 'All') ? null : safeInt(psVal);
+    var possibleRows = [];
+    var map = {};
+    var uniqueRanges = [];
+    var i;
+    var nr;
+    var key;
+
+    for (i = 0; i < data.length; i++) {
+      if (psNum === null || safeInt(data[i].pickSize) === psNum) {
+        possibleRows.push(data[i]);
+      }
+    }
+
+    if (!possibleRows.length) {
+      populateAllNumberRanges();
+      return;
+    }
+
+    for (i = 0; i < possibleRows.length; i++) {
+      nr = safeInt(possibleRows[i].numberRange);
+      if (nr > 0) {
+        map[nr] = true;
+      }
+    }
+
+    for (key in map) {
+      if (Object.prototype.hasOwnProperty.call(map, key)) {
+        uniqueRanges.push(safeInt(key));
+      }
+    }
+
+    uniqueRanges = uniqueRanges.filter(function(n) {
+      return n > 0;
+    }).sort(function(a, b) {
+      return a - b;
+    });
+
+    if (!uniqueRanges.length) {
+      populateAllNumberRanges();
+      return;
+    }
+
+    populateDropdown(numberRangeSelector, uniqueRanges, 'All');
+    refreshSelectUI(numberRangeSelector);
+  }
+
+  function updateAssuranceDropdown() {
+    var psVal = String(pickSizeSelector.value || 'All');
+    var nrVal = String(numberRangeSelector.value || 'All');
+    var psNum = (psVal === 'All') ? null : safeInt(psVal);
+    var nrNum = (nrVal === 'All') ? null : safeInt(nrVal);
+    var possibleRows = [];
+    var map = {};
+    var uniqueAssurances = [];
+    var i;
+    var assuranceValue;
+    var key;
+
+    for (i = 0; i < data.length; i++) {
+      if (psNum !== null && safeInt(data[i].pickSize) !== psNum) {
+        continue;
+      }
+      if (nrNum !== null && safeInt(data[i].numberRange) !== nrNum) {
+        continue;
+      }
+      possibleRows.push(data[i]);
+    }
+
+    if (!possibleRows.length) {
+      populateAllAssurances();
+      refreshSelectUI(assuranceSelector);
+      return;
+    }
+
+    for (i = 0; i < possibleRows.length; i++) {
+      assuranceValue = String(possibleRows[i].assurance || '').trim();
+      if (assuranceValue) {
+        map[assuranceValue] = true;
+      }
+    }
+
+    for (key in map) {
+      if (Object.prototype.hasOwnProperty.call(map, key)) {
+        uniqueAssurances.push(key);
+      }
+    }
+
+    uniqueAssurances.sort();
+
+    if (!uniqueAssurances.length) {
+      populateAllAssurances();
+      refreshSelectUI(assuranceSelector);
+      return;
+    }
+
+    populateDropdown(assuranceSelector, uniqueAssurances, 'All');
+    refreshSelectUI(assuranceSelector);
+  }
+
+  function filterTableData() {
+    var psVal = String(pickSizeSelector.value || 'All');
+    var nrVal = String(numberRangeSelector.value || 'All');
+    var aVal = String(assuranceSelector.value || 'All');
+    var psNum = (psVal === 'All') ? null : safeInt(psVal);
+    var nrNum = (nrVal === 'All') ? null : safeInt(nrVal);
+
+    filteredData = data.filter(function(item) {
+      var ps = safeInt(item.pickSize);
+      var nr = safeInt(item.numberRange);
+      var as = String(item.assurance || '').trim();
+
+      if (psNum !== null && ps !== psNum) {
+        return false;
+      }
+      if (nrNum !== null && nr !== nrNum) {
+        return false;
+      }
+      if (aVal !== 'All' && as !== aVal) {
+        return false;
+      }
+
+      return true;
+    });
+
+    displayData(filteredData);
+  }
+
+  function clearFilters() {
+    pickSizeSelector.value = 'All';
+    populateAllNumberRanges();
+    populateAllAssurances();
+    numberRangeSelector.value = 'All';
+    assuranceSelector.value = 'All';
+    filteredData = data.slice();
+    displayData(filteredData);
+  }
+
+  function attachDropdownListeners() {
+    pickSizeSelector.addEventListener('change', function() {
+      if (pickSizeSelector.value === 'All') {
+        populateAllNumberRanges();
+        populateAllAssurances();
+        numberRangeSelector.value = 'All';
+        assuranceSelector.value = 'All';
+      } else {
+        updateNumberRangeDropdown();
+        numberRangeSelector.value = 'All';
+        populateAllAssurances();
+        assuranceSelector.value = 'All';
+      }
+
+      filterTableData();
+    });
+
+    numberRangeSelector.addEventListener('change', function() {
+      if (numberRangeSelector.value === 'All') {
+        populateAllAssurances();
+        assuranceSelector.value = 'All';
+      } else {
+        updateAssuranceDropdown();
+      }
+
+      filterTableData();
+    });
+
+    assuranceSelector.addEventListener('change', filterTableData);
+
+    document.getElementById('clearFilters').addEventListener('click', clearFilters);
+  }
+
+  function attachSortListeners() {
+    var ths = resultsTable.querySelectorAll('th.sortable');
+    var i;
+
+    for (i = 0; i < ths.length; i++) {
+      (function(th) {
+        th.addEventListener('click', function() {
+          var type = th.getAttribute('data-type');
+          var isAscending = !th.classList.contains('asc');
+          var cols;
+          var k;
+
+          filteredData.sort(function(a, b) {
+            var va = a[type];
+            var vb = b[type];
+
+            if (type === 'assuranceSort') {
+              va = String(va || '');
+              vb = String(vb || '');
+              return isAscending ? va.localeCompare(vb) : vb.localeCompare(va);
+            }
+
+            va = safeInt(va);
+            vb = safeInt(vb);
+
+            return isAscending ? (va - vb) : (vb - va);
+          });
+
+          cols = resultsTable.querySelectorAll('th.sortable');
+          for (k = 0; k < cols.length; k++) {
+            cols[k].classList.remove('active', 'asc', 'desc');
+          }
+
+          th.classList.add('active');
+          th.classList.add(isAscending ? 'asc' : 'desc');
+
+          displayData(filteredData);
+        });
+      })(ths[i]);
+    }
+  }
+
+  fetch(INDEX_URL, { credentials: 'same-origin', cache: 'no-store' })
+    .then(function(r) {
+      if (!r.ok) {
+        throw new Error('HTTP ' + r.status);
+      }
+      return r.text();
+    })
+    .then(function(t) {
+      var txt = (t || '').trim();
+      var j;
+
+      try {
+        j = JSON.parse(txt);
+      } catch (e) {
+        throw new Error('JSON parse failed. First chars: ' + txt.slice(0, 80));
+      }
+
+      if (!j || !j.items || !j.items.length) {
+        throw new Error('Catalog empty or missing items[]');
+      }
+
+      data = j.items.map(function(it) {
+        var sysId = (it.system_id != null) ? it.system_id : (it.id != null ? it.id : '');
+        var ps = (it.pickSize != null) ? it.pickSize : (it.pick_size != null ? it.pick_size : 0);
+        var nr = (it.numberRange != null) ? it.numberRange :
+                 (it.requiredSelections != null ? it.requiredSelections :
+                 (it.number_range != null ? it.number_range : 0));
+        var as = (it.assurance != null && String(it.assurance).trim() !== '') ? it.assurance :
+                 (it.assuranceText != null && String(it.assuranceText).trim() !== '') ? it.assuranceText :
+                 (it.assurance_text != null ? it.assurance_text : '');
+        var asPlain = (it.assurance_plain != null && String(it.assurance_plain).trim() !== '') ? it.assurance_plain :
+                      (it.assurancePlain != null && String(it.assurancePlain).trim() !== '') ? it.assurancePlain :
+                      as;
+        var asTitle = (it.assurance_title != null && String(it.assurance_title).trim() !== '') ? it.assurance_title :
+                      (it.assuranceTitle != null && String(it.assuranceTitle).trim() !== '') ? it.assuranceTitle :
+                      '';
+        var g = (it.games != null) ? it.games :
+                (it.combinationsCount != null ? it.combinationsCount :
+                (it.combinations_count != null ? it.combinations_count : 0));
+
+        return {
+          system_id: String(sysId || ''),
+          pickSize: safeInt(ps),
+          numberRange: safeInt(nr),
+          assurance: String(as || '').trim(),
+          assurancePlain: String(asPlain || '').trim(),
+          assuranceTitle: String(asTitle || '').trim(),
+          assuranceSort: String(asPlain || as || '').trim().toLowerCase(),
+          games: safeInt(g)
+        };
+      });
+
+      data = data.filter(function(r) {
+        return r.system_id && r.pickSize > 0 && r.numberRange > 0;
+      });
+
+      if (!data.length) {
+        throw new Error('Catalog parsed but contains 0 valid systems.');
+      }
+
+      filteredData = data.slice();
+
+      (function buildPickDropdown() {
+        var pickMap = {};
+        var pickSizes = [];
+        var key;
+        var i;
+
+        for (i = 0; i < data.length; i++) {
+          pickMap[data[i].pickSize] = true;
+        }
+
+        for (key in pickMap) {
+          if (Object.prototype.hasOwnProperty.call(pickMap, key)) {
+            pickSizes.push(safeInt(key));
+          }
+        }
+
+        pickSizes = pickSizes.filter(function(n) {
+          return n > 0;
+        }).sort(function(a, b) {
+          return a - b;
+        });
+
+        populateDropdown(pickSizeSelector, pickSizes, 'All');
+      })();
+
+      pickSizeSelector.value = 'All';
+      populateAllNumberRanges();
+      populateAllAssurances();
+      numberRangeSelector.value = 'All';
+      assuranceSelector.value = 'All';
+
+      displayData(filteredData);
+      attachDropdownListeners();
+      attachSortListeners();
+
+      (function setStatusOk() {
+        var dot = document.querySelector('.le-dot');
+        if (dot) {
+          dot.classList.add('ok');
+        }
+      })();
+
+      statusBox.textContent = 'Loaded ' + data.length + ' systems. Use filters to find yours.';
+    })
+    .catch(function(err) {
+      var dot = document.querySelector('.le-dot');
+
+      if (dot) {
+        dot.classList.remove('ok', 'warn');
+        dot.classList.add('err');
+      }
+
+      statusBox.textContent = 'Could not load wheel catalog: ' + err.message;
+    });
+});
+[[/script]]
+
+[[/div]]
+<!-- END: Lottery Wheeling Systems Module -->
+{/source}
