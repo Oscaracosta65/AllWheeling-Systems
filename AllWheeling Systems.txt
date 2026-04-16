@@ -1,9 +1,67 @@
 {source}
 <!-- BEGIN: Lottery Wheeling Systems Module -->
+
+[[script type="application/ld+json"]]
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a lottery wheeling system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A wheeling system is a predefined combination template. Given a pool of numbers you choose, the system determines how those numbers are grouped into playable lines so coverage is distributed across combinations in a structured way. It is a coverage organization tool, not a prediction tool."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do wheeling systems improve lottery odds?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Wheeling systems do not increase your overall odds of winning. They organize your combinations so that if your selected numbers contain the drawn numbers, your coverage guarantee is met. The underlying probability of each individual line remains unchanged."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the assurance or guarantee column mean in a wheeling system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The assurance indicates the minimum prize tier you are guaranteed to win if a specific number of drawn numbers fall within your selected pool. For example, a 3-if-4 guarantee means you are assured at least one 3-number match if any 4 of the drawn numbers are among your selections. Higher assurances generally require more combinations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I use the Wheeling Systems Library on LottoExpert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Filter by Pick Size, Numbers to Play, and Assurance level to narrow the list. Compare how many combinations each system produces, then click View System to open the Wheel Builder and generate combinations using your own selected numbers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a full wheel and an abbreviated wheeling system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A full wheel generates every possible combination from your selected numbers, providing maximum coverage but also the highest number of lines. An abbreviated wheel uses fewer combinations while still maintaining a defined coverage guarantee, making it more practical for most players and budgets."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the Games column tell me?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Games column shows the total number of combinations (lines) the system generates. This directly corresponds to how many tickets you would need to purchase to play the full system. Compare this against your intended budget before selecting a system."
+      }
+    }
+  ]
+}
+[[/script]]
+
 [[div class="lotto-systems-module"]]
 
 [[style]]
-/* --- LottoExpert Wheeling Catalog (SKAI brand, premium, mobile-first, WCAG AA) --- */
+/* --- LottoExpert Wheeling Systems Library (SKAI brand, premium, mobile-first, WCAG AA) --- */
 
 /* Brand Tokens (scoped) */
 .le-wheel-wrap{
@@ -81,7 +139,7 @@
   pointer-events:none;
 }
 .le-wheel-hero h1{
-  margin:0 0 6px;
+  margin:0 0 8px;
   font-size:24px;
   letter-spacing:-0.2px;
   line-height:1.2;
@@ -91,8 +149,8 @@
 .le-wheel-hero p{
   margin:0;
   color:rgba(255,255,255,.90) !important;
-  line-height:1.45;
-  max-width:70ch;
+  line-height:1.5;
+  max-width:72ch;
 }
 
 /* Layout grid */
@@ -194,6 +252,20 @@
   letter-spacing:.2px;
 }
 
+/* Section headings: semantic h2 visually styled as small uppercase labels */
+.le-section-heading{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  color: rgba(10,26,51,.60);
+  margin:0 0 6px;
+  padding:0;
+  line-height:1.4;
+}
+.le-section-heading + p,
+.le-section-heading + ol{ margin-top:4px; }
+
 /* Inputs */
 .le-input,
 .le-select{
@@ -204,6 +276,7 @@
   background:#FFFFFF;
   color: var(--text);
   min-height:42px;
+  min-width:90px;
   transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease;
 }
 .le-input:hover,
@@ -274,6 +347,7 @@
   width:10px;
   height:10px;
   border-radius:999px;
+  flex-shrink:0;
   background: rgba(127,141,170,.9);
   box-shadow: 0 0 0 4px rgba(127,141,170,.14);
 }
@@ -337,6 +411,33 @@
   background: rgba(28,102,255,.035);
 }
 .le-table td:last-child{ text-align:right; }
+
+/* Sort indicators */
+.le-table th.sortable{
+  cursor:pointer;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.le-table th.sortable::after{
+  content:" \2195";
+  opacity:.30;
+  font-size:11px;
+  font-weight:400;
+  margin-left:2px;
+}
+.le-table th.sortable.active{ color: var(--skai-blue); }
+.le-table th.sortable.active.asc::after{
+  content:" \2191";
+  opacity:1;
+}
+.le-table th.sortable.active.desc::after{
+  content:" \2193";
+  opacity:1;
+}
+.le-table th.sortable:focus-visible{
+  outline:3px solid rgba(28,102,255,.35);
+  outline-offset:2px;
+}
 
 @media (min-width: 721px){
   .le-table th:nth-child(1), .le-table td:nth-child(1){ width:70px; }
@@ -450,6 +551,73 @@
 }
 .le-pill button:hover{ color: rgba(10,26,51,.95); }
 
+/* Visually hidden (accessible text, not visible on screen) */
+.le-visually-hidden{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
+/* FAQ section */
+.le-faq-section{
+  margin-top: var(--s24);
+  border-radius: var(--r20);
+  border:1px solid var(--border);
+  background: var(--surface-2);
+  padding: var(--s20);
+}
+.le-faq-section-heading{
+  font-size:15px;
+  font-weight:800;
+  color: var(--deep-navy);
+  margin:0 0 var(--s16);
+  padding:0;
+  letter-spacing:-.1px;
+}
+.le-faq-item{
+  border-bottom:1px solid var(--border);
+}
+.le-faq-item:last-child{ border-bottom:0; }
+.le-faq-item summary{
+  list-style:none;
+  display:-webkit-box;
+  display:flex;
+  -webkit-box-pack:justify;
+  justify-content:space-between;
+  -webkit-box-align:center;
+  align-items:center;
+  padding:13px 0;
+  font-size:14px;
+  font-weight:700;
+  color: var(--deep-navy);
+  cursor:pointer;
+  line-height:1.4;
+  gap:12px;
+}
+.le-faq-item summary::-webkit-details-marker{ display:none; }
+.le-faq-item summary::after{
+  content:"\002B";
+  font-size:18px;
+  font-weight:400;
+  color: var(--skai-blue);
+  flex-shrink:0;
+}
+.le-faq-item[open] > summary::after{ content:"\2212"; }
+.le-faq-answer{
+  font-size:13px;
+  line-height:1.65;
+  color: var(--text-muted);
+  padding:0 0 14px;
+  max-width:72ch;
+  margin:0;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   .le-btn,
@@ -466,11 +634,13 @@
 [[div class="le-wheel-wrap"]]
 
   [[div class="le-wheel-hero"]]
-    [[h1]]Wheeling Systems Library[[/h1]]
+    [[h1]]Lottery Wheeling Systems Library[[/h1]]
     [[p]]
-      A curated reference of lottery wheeling systems available on LottoExpert.net.
-      This library helps you understand how different systems structure number coverage
-      before you generate combinations.
+      Browse and compare all lottery wheeling systems available on LottoExpert.
+      A wheeling system is a structured combination template that organizes a pool of
+      selected numbers into playable lines with a defined coverage guarantee. Use this
+      library to compare pick sizes, number pool sizes, assurance levels, and total
+      game counts before opening a system in the Wheel Builder.
     [[/p]]
   [[/div]]
 
@@ -480,15 +650,15 @@
 
       [[div class="le-help"]]
 
-        [[div class="le-label"]]What this page is for[[/div]]
+        [[h2 class="le-section-heading"]]What this page is for[[/h2]]
         <p>
           This page is a <strong>system selection and comparison tool</strong>.
           It does not generate numbers, predictions, or results.
-          Instead, it helps you choose <em>how</em> combinations will be constructed
+          Instead, it helps you choose <em>how</em> combinations will be structured
           once you decide which numbers to play.
         </p>
 
-        [[div class="le-label" style="margin-top:14px"]]What a wheeling system does[[/div]]
+        [[h2 class="le-section-heading" style="margin-top:14px"]]What a wheeling system does[[/h2]]
         <p>
           A wheeling system is a predefined combination template.
           Given a pool of numbers, the system determines how those numbers
@@ -501,36 +671,43 @@
           This library lets you compare those structures before committing to one.
         </p>
 
-        [[div class="le-label" style="margin-top:14px"]]How this fits into LottoExpert[[/div]]
+        [[h2 class="le-section-heading" style="margin-top:14px"]]How this fits into LottoExpert[[/h2]]
         <p>
-          On LottoExpert.net, wheeling systems are part of a broader toolkit.
-          You select a system here, then open it in the Wheel Builder to
+          On LottoExpert.net, wheeling systems are part of a broader analytical toolkit.
+          You select a system here, then open it in the
+          <a href="/wheel-builder1">Wheel Builder</a> to
           generate combinations using your own selected numbers.
         </p>
 
         <p class="le-muted">
           SKAI-powered analysis tools help interpret patterns and distributions elsewhere
-          on the platform. Wheeling systems themselves are neutral structures and do not
-          predict outcomes.
+          on the platform. Wheeling systems themselves are neutral combination structures
+          and do not predict outcomes or change probability.
         </p>
 
-        [[div class="le-label" style="margin-top:16px"]]How to use this library[[/div]]
+        [[h2 class="le-section-heading" style="margin-top:16px"]]How to use this library[[/h2]]
         [[ol]]
           [[li]]
-            Filter systems by <strong>Pick Size</strong>, <strong>Numbers to Play</strong>,
-            and <strong>Assurance</strong> to narrow the list.
+            Set <strong>Pick Size</strong> to match your lottery game
+            (for example, Pick 6 for a standard 6/49 draw).
           [[/li]]
           [[li]]
-            Compare how many combinations each system produces.
+            Set <strong>Numbers to Play</strong> to the number of selections
+            you plan to make.
           [[/li]]
           [[li]]
-            Open a system to move into the Wheel Builder and generate combinations.
+            Choose an <strong>Assurance</strong> level to set the minimum
+            coverage guarantee you need.
+          [[/li]]
+          [[li]]
+            Compare the <strong>Games</strong> count, then click
+            <strong>View System</strong> to open that system in the Wheel Builder.
           [[/li]]
         [[/ol]]
 
         <p class="le-muted">
-          Important: Wheeling systems describe structure and coverage.
-          They do not increase odds or guarantee results.
+          Important: Wheeling systems describe combination structure and coverage.
+          They do not increase odds or guarantee prizes.
         </p>
 
       [[/div]]
@@ -538,29 +715,29 @@
       [[div class="le-status"]]
         [[span class="le-dot" aria-hidden="true"]][[/span]]
         [[div id="leCatalogStatus" role="status" aria-live="polite"]]
-          Loading wheeling systems…
+          Loading wheeling systems...
         [[/div]]
       [[/div]]
 
-      [[div id="filter-container" class="le-row" aria-label="Wheel catalog filters"]]
+      [[div id="filter-container" class="le-row" role="group" aria-label="Wheel catalog filters"]]
         [[div]]
           [[div class="le-label"]][[label for="pickSize"]]Pick Size[[/label]][[/div]]
-          [[select id="pickSize" class="le-select"]][[/select]]
+          [[select id="pickSize" class="le-select" aria-label="Filter by pick size"]][[/select]]
         [[/div]]
 
         [[div]]
           [[div class="le-label"]][[label for="numberRange"]]Numbers to Play[[/label]][[/div]]
-          [[select id="numberRange" class="le-select"]][[/select]]
+          [[select id="numberRange" class="le-select" aria-label="Filter by numbers to play"]][[/select]]
         [[/div]]
 
         [[div]]
           [[div class="le-label"]][[label for="assurance"]]Assurance[[/label]][[/div]]
-          [[select id="assurance" class="le-select"]][[/select]]
+          [[select id="assurance" class="le-select" aria-label="Filter by assurance level"]][[/select]]
         [[/div]]
 
         [[div]]
           [[div class="le-label"]]&nbsp;[[/div]]
-          [[button id="clearFilters" class="le-btn ghost" type="button"]]
+          [[button id="clearFilters" class="le-btn ghost" type="button" aria-label="Clear all filters"]]
             Clear Filters
           [[/button]]
         [[/div]]
@@ -569,23 +746,24 @@
     [[/div]]
 
     [[div class="le-card"]]
-      [[div class="le-label"]]Available wheeling systems[[/div]]
+      [[h2 class="le-section-heading"]]Available wheeling systems[[/h2]]
       [[div class="le-muted"]]
-        Sort by Pick, Numbers, Assurance, or total Games to compare system structures.
+        Sort by Pick, Numbers, Assurance, or Games to compare system structures.
         <span class="le-scrollhint" aria-hidden="true">
-          Mobile tip: rotate to landscape for a wider view. You can also swipe left/right to see all columns. Scroll up/down for more systems.
+          Swipe left and right to see all columns. Rotate to landscape for a wider view.
         </span>
       [[/div]]
 
       [[div class="le-results" role="region" aria-label="Wheel catalog results"]]
         [[table id="resultsTable" class="le-table"]]
+          [[caption class="le-visually-hidden"]]Wheeling systems catalog. Columns are sortable: Pick Size, Numbers, Guarantee Basis, and Games. Use the filters to narrow results.[[/caption]]
           [[thead]]
             [[tr]]
-              [[th class="sortable" data-type="pickSize"]]Pick[[/th]]
-              [[th class="sortable" data-type="numberRange"]]Numbers[[/th]]
-              [[th class="sortable" data-type="assuranceSort"]]Guarantee Basis[[/th]]
-              [[th class="sortable" data-type="games"]]Games[[/th]]
-              [[th]]Open[[/th]]
+              [[th class="sortable" data-type="pickSize" scope="col" tabindex="0" aria-sort="none"]]Pick[[/th]]
+              [[th class="sortable" data-type="numberRange" scope="col" tabindex="0" aria-sort="none"]]Numbers[[/th]]
+              [[th class="sortable" data-type="assuranceSort" scope="col" tabindex="0" aria-sort="none"]]Guarantee Basis[[/th]]
+              [[th class="sortable" data-type="games" scope="col" tabindex="0" aria-sort="none"]]Games[[/th]]
+              [[th scope="col"]]Action[[/th]]
             [[/tr]]
           [[/thead]]
           [[tbody]][[/tbody]]
@@ -594,6 +772,63 @@
     [[/div]]
 
   [[/div]]
+
+  [[section class="le-faq-section" aria-label="Frequently asked questions about lottery wheeling systems"]]
+    [[h2 class="le-faq-section-heading"]]Wheeling Systems: Common Questions[[/h2]]
+
+    [[details class="le-faq-item"]]
+      [[summary]]What is a lottery wheeling system?[[/summary]]
+      [[p class="le-faq-answer"]]
+        A wheeling system is a predefined combination template. Given a pool of numbers
+        you choose, the system determines how those numbers are grouped into playable
+        lines so coverage is distributed across combinations in a structured way. It is
+        a coverage organization tool, not a prediction tool.
+      [[/p]]
+    [[/details]]
+
+    [[details class="le-faq-item"]]
+      [[summary]]Do wheeling systems improve my odds of winning?[[/summary]]
+      [[p class="le-faq-answer"]]
+        No. Wheeling systems do not increase your overall odds of winning. They organize
+        your combinations so that if your selected numbers contain the drawn numbers,
+        your coverage guarantee is met. The underlying probability of each individual
+        line remains unchanged. Wheeling helps you manage coverage within a fixed budget
+        of lines, not change probability.
+      [[/p]]
+    [[/details]]
+
+    [[details class="le-faq-item"]]
+      [[summary]]What does the assurance or guarantee column mean?[[/summary]]
+      [[p class="le-faq-answer"]]
+        The assurance indicates the minimum prize tier you are guaranteed to win if a
+        specific number of drawn numbers fall within your selected pool. For example,
+        a <strong>3-if-4</strong> guarantee means you are assured at least one 3-number
+        match if any 4 of the drawn numbers are among your selections. Higher assurances
+        generally require more combinations.
+      [[/p]]
+    [[/details]]
+
+    [[details class="le-faq-item"]]
+      [[summary]]What is the difference between a full wheel and an abbreviated wheel?[[/summary]]
+      [[p class="le-faq-answer"]]
+        A full wheel generates every possible combination from your selected numbers,
+        providing maximum coverage but also the highest number of lines and cost.
+        An abbreviated (or reduced) wheel uses fewer combinations while still maintaining
+        a defined coverage guarantee, making it more practical for most players and budgets.
+      [[/p]]
+    [[/details]]
+
+    [[details class="le-faq-item"]]
+      [[summary]]What does the Games column tell me?[[/summary]]
+      [[p class="le-faq-answer"]]
+        The Games column shows the total number of combinations (lines) the system
+        generates. This directly corresponds to how many tickets you would need to
+        purchase to play the full system. Compare this against your intended budget
+        before selecting a system.
+      [[/p]]
+    [[/details]]
+
+  [[/section]]
 
 [[/div]]
 
@@ -750,44 +985,68 @@ document.addEventListener('DOMContentLoaded', function() {
   function displayData(rows) {
     var i;
     var item;
-    var row;
-    var aCell;
-    var linkCell;
+    var tr;
+    var td;
     var link;
+    var fragment;
+    var linkLabel;
 
     tableBody.innerHTML = '';
 
+    if (!rows.length) {
+      tr = document.createElement('tr');
+      td = document.createElement('td');
+      td.colSpan = 5;
+      td.textContent = 'No systems match the current filters. Try clearing one or more filters.';
+      tr.appendChild(td);
+      tableBody.appendChild(tr);
+      return;
+    }
+
+    fragment = document.createDocumentFragment();
+
     for (i = 0; i < rows.length; i++) {
       item = rows[i];
-      row = tableBody.insertRow();
+      tr = document.createElement('tr');
 
-      row.insertCell(0).textContent = item.pickSize;
-      row.insertCell(1).textContent = item.numberRange;
+      td = document.createElement('td');
+      td.textContent = item.pickSize;
+      tr.appendChild(td);
 
-      aCell = row.insertCell(2);
-      aCell.textContent = item.assurancePlain || item.assurance || '';
+      td = document.createElement('td');
+      td.textContent = item.numberRange;
+      tr.appendChild(td);
+
+      td = document.createElement('td');
+      td.textContent = item.assurancePlain || item.assurance || '';
       if (item.assuranceTitle) {
-        aCell.title = item.assuranceTitle;
+        td.title = item.assuranceTitle;
       }
+      tr.appendChild(td);
 
-      row.insertCell(3).textContent = item.games;
+      td = document.createElement('td');
+      td.textContent = item.games;
+      tr.appendChild(td);
 
-      linkCell = row.insertCell(4);
+      td = document.createElement('td');
       link = document.createElement('a');
       link.href = buildActionUrl(item);
       link.textContent = (USE_DETAIL_PAGE === true) ? 'View Details' : 'View System';
+      linkLabel = ((USE_DETAIL_PAGE === true) ? 'View Details' : 'View System') +
+        ': Pick ' + item.pickSize +
+        ', ' + item.numberRange + ' numbers' +
+        (item.assurancePlain ? ', ' + item.assurancePlain : '');
+      link.setAttribute('aria-label', linkLabel);
       link.target = '_blank';
-      link.rel = 'noopener';
+      link.rel = 'noopener noreferrer';
       link.className = 'le-btn secondary';
-      linkCell.appendChild(link);
+      td.appendChild(link);
+      tr.appendChild(td);
+
+      fragment.appendChild(tr);
     }
 
-    if (!rows.length) {
-      row = tableBody.insertRow();
-      linkCell = row.insertCell(0);
-      linkCell.colSpan = 5;
-      linkCell.textContent = 'No systems found for these filters.';
-    }
+    tableBody.appendChild(fragment);
   }
 
   function updateNumberRangeDropdown() {
@@ -969,7 +1228,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (i = 0; i < ths.length; i++) {
       (function(th) {
-        th.addEventListener('click', function() {
+        function doSort() {
           var type = th.getAttribute('data-type');
           var isAscending = !th.classList.contains('asc');
           var cols;
@@ -994,12 +1253,24 @@ document.addEventListener('DOMContentLoaded', function() {
           cols = resultsTable.querySelectorAll('th.sortable');
           for (k = 0; k < cols.length; k++) {
             cols[k].classList.remove('active', 'asc', 'desc');
+            cols[k].setAttribute('aria-sort', 'none');
           }
 
           th.classList.add('active');
           th.classList.add(isAscending ? 'asc' : 'desc');
+          th.setAttribute('aria-sort', isAscending ? 'ascending' : 'descending');
 
           displayData(filteredData);
+        }
+
+        th.addEventListener('click', doSort);
+
+        th.addEventListener('keydown', function(e) {
+          var code = e.keyCode || e.which;
+          if (code === 13 || code === 32) {
+            e.preventDefault();
+            doSort();
+          }
         });
       })(ths[i]);
     }
@@ -1109,7 +1380,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       })();
 
-      statusBox.textContent = 'Loaded ' + data.length + ' systems. Use filters to find yours.';
+      statusBox.textContent = 'Loaded ' + data.length + ' systems. Use the filters to find yours.';
     })
     .catch(function(err) {
       var dot = document.querySelector('.le-dot');
